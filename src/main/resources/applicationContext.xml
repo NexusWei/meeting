@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- Spring配置文件 -->
+    <!-- 启动扫描包，使用默认过滤器 -->
+    <context:component-scan base-package="com.nexus.meeting" use-default-filters="true">
+        <!-- 扫描包除去@Controller。即Spring不扫描controller层 -->
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- 加载数据库连接配置文件 -->
+    <context:property-placeholder location="classpath:db.properties" />
+
+    <bean class="com.alibaba.druid.pool.DruidDataSource" id="dataSource">
+        <property name="username" value="${db.username}" />
+        <property name="password" value="${db.password}" />
+        <property name="url" value="${db.url}" />
+    </bean>
+
+    <!--
+        在基本的 MyBatis 中,session 工厂可以使用 SqlSessionFactoryBuilder 来创建。
+        而在 MyBatis-spring 中,则使用SqlSessionFactoryBean 来替代
+    -->
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactoryBean">
+        <!-- 必须属性：SqlSessionFactory 有一个单独的必须属性,就是 JDBC 的 DataSource。 -->
+        <property name="dataSource" ref="dataSource" />
+
+        <!-- 别名 -->
+        <property name="typeAliasesPackage" value="com.nexus.meeting.model" />
+
+        <!--
+            建议属性：当MyBatis 映射器 XML 文件在和映射器类不在同一路径下,有两种解决方法。
+            第一是手动在 MyBatis 的 XML 配 置文件中使用<mappers>部分来指定类路径。
+            第二是使用工厂 bean 的 mapperLocations 属 性。
+        -->
+        <property name="mapperLocations">
+            <value>
+                classpath*:com/nexus/meeting/mapper/*.xml
+            </value>
+        </property>
+    </bean>
+
+
+    <!-- 对mapper的注入 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" id="mapperScannerConfigurer">
+        <!--
+            这样先将bean name注入到sqlSessionFactoryBeanName，
+            等到spring初始化完成后，再通过bean name构建sqlSessionFactory。-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean" />
+
+        <!--
+            basePackage ：告知需要扫描的包，那么在这个包下面所有的接口都会被扫描到，同时作为一个 certRegionMapperbean 被注册，
+            以便其他的bean,如serverice层注入。
+        -->
+        <property name="basePackage" value="com.nexus.meeting.mapper" />
+    </bean>
+
+    <!-- 事务配置 -->
+    <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="transactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!-- 配置事务传播特性 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="add*" />
+            <tx:method name="insert*" />
+            <tx:method name="update*" />
+            <tx:method name="delete*" />
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <!-- aop:pointcut标签配置参与事务的类，由于是在Service中进行数据库业务操作，配的应该是包含那些作为事务的方法的Service类。 -->
+        <!--
+            首先应该特别注意的是id的命名，同样由于每个模块都有自己事务切面，所以我觉得初步的命名规则因为 all+模块名+ServiceMethod。
+            而且每个模块之间不同之处还在于以下一句：
+             expression="execution(* com.nexus.meeting.service.*.*(..))"
+             第一个* 代表任意返回值类型
+             第二* 代表service下子包的任意类
+             第三个* 代表service下子包的任意类的任意方法
+             .. 代表方法可以有0个或多个参数。
+        -->
+        <aop:pointcut id="pc1" expression="execution(* com.nexus.meeting.service.*.*(..))"/>
+        <!--
+            aop:advisor标签就是把上面我们所配置的事务管理两部分属性整合起来作为整个事务管理
+        -->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pc1" />
+    </aop:config>
+</beans>
