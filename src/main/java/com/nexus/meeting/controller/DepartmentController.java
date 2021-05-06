@@ -28,4 +28,5 @@ public class DepartmentController {
     public String departments() {
         return "departments";
     }
+
 }

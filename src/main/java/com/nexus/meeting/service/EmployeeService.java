@@ -5,6 +5,8 @@ import com.nexus.meeting.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EmployeeService {
     @Autowired
@@ -28,5 +30,15 @@ public class EmployeeService {
         employee.setRole(1);
         employee.setStatus(0);
         return employeeMapper.doReg(employee);
+    }
+
+    // 根据状态查询所有待审批用户
+    public List<Employee> getAllEmpsByStatus(Integer status) {
+        return employeeMapper.getAllEmpsByStatus(status);
+    }
+
+    // 根据id更新审批状态
+    public Integer updatestatus(Integer employeeid, Integer status) {
+        return employeeMapper.updatestatus(employeeid, status);
     }
 }

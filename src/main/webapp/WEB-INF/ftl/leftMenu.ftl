@@ -14,7 +14,7 @@
             <#-- 只有管理员能看到的菜单 -->
             <#if currentuser?? && (currentuser.role==2)>
                 <li class="sidebar-menuitem"><a href="/admin/departments">部门管理</></li>
-                <li class="sidebar-menuitem"><a href="/admin/approveaccount.ftl">注册审批</a></li>
+                <li class="sidebar-menuitem"><a href="/admin/approveaccount">注册审批</a></li>
                 <li class="sidebar-menuitem"><a href="/admin/searchemployees.ftl">搜索员工</a></li>
             </#if>
         </ul>

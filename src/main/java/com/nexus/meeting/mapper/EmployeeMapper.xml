@@ -12,4 +12,12 @@
         insert into employee (employeename, username, phone, email, status, departmentid, password, role)
         value (#{employeename}, #{username}, #{phone}, #{email}, #{status}, #{departmentid}, #{password}, #{role})
     </insert>
+
+    <select id="getAllEmpsByStatus" resultType="com.nexus.meeting.model.Employee">
+        select * from employee where status = #{status}
+    </select>
+
+    <update id="updatestatus" parameterType="com.nexus.meeting.model.Employee">
+        update employee set status = #{status} where employeeid = #{employeeid}
+    </update>
 </mapper>
