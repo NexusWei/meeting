@@ -9,4 +9,10 @@ public interface DepartmentMapper {
     Department getDepById(Integer id);
 
     List<Department> getAllDeps();
+
+    Integer adddepartment(String departmentname);
+
+    Department getDepByName(String departmentname);
+
+    Integer deletedep(Integer departmentid);
 }

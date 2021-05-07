@@ -15,7 +15,7 @@ public class PermissInterceptor implements HandlerInterceptor {
 
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object Handler) throws Exception {
         String requestURI = request.getRequestURI();
-        System.out.println(requestURI);
+//        System.out.println(requestURI);
 
         // 匿名就能访问的页面
         if ("/".equals(requestURI) || "/doLogin".equals(requestURI) || "/register".equals(requestURI) || "/doReg".equals(requestURI)) {

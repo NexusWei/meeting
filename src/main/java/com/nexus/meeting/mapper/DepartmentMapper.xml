@@ -11,4 +11,16 @@
     <select id="getAllDeps" resultType="com.nexus.meeting.model.Department">
         select * from department
     </select>
+
+    <insert id="adddepartment" parameterType="java.lang.String">
+        insert into department (departmentname) values (#{departmentname})
+    </insert>
+
+    <select id="getDepByName" resultType="com.nexus.meeting.model.Department">
+        select * from department where departmentname = #{department}
+    </select>
+
+    <delete id="deletedep">
+        delete from department where departmentid = #{departmentid}
+    </delete>
 </mapper>
