@@ -32,4 +32,8 @@ public class DepartmentService {
     public Integer deletedep(Integer departmentid) {
         return departmentMapper.deletedep(departmentid);
     }
+
+    public Integer updatedep(Integer id, String name) {
+        return departmentMapper.updatedep(id, name);
+    }
 }

@@ -41,4 +41,13 @@ public class EmployeeService {
     public Integer updatestatus(Integer employeeid, Integer status) {
         return employeeMapper.updatestatus(employeeid, status);
     }
+
+    public List<Employee> getAllEmps(Employee employee, Integer page, Integer pageSize) {
+        page = (page -1) * pageSize;
+        return employeeMapper.getAllEmps(employee, page, pageSize);
+    }
+
+    public Long getTotal(Employee employee) {
+        return employeeMapper.getTotal(employee);
+    }
 }

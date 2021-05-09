@@ -23,4 +23,8 @@
     <delete id="deletedep">
         delete from department where departmentid = #{departmentid}
     </delete>
+
+    <update id="updatedep">
+        update department set departmentname = #{name} where departmentid = #{id}
+    </update>
 </mapper>

@@ -20,4 +20,33 @@
     <update id="updatestatus" parameterType="com.nexus.meeting.model.Employee">
         update employee set status = #{status} where employeeid = #{employeeid}
     </update>
+
+    <select id="getAllEmps" resultType="com.nexus.meeting.model.Employee">
+        select * from employee where 1=1
+        <if test="employee.status != null">
+            and employee.status = #{employee.status}
+        </if>
+        <if test="employee.employeename != null">
+            and employee.employeename like concat('%',#{employee.employeename},'%')
+        </if>
+        <if test="employee.username != null">
+            and employee.username like concat('%',#{employee.username},'%')
+        </if>
+        limit #{page}, #{pageSize}
+    </select>
+
+    <select id="getTotal" resultType="java.lang.Long">
+        select count(*) from employee
+        <where>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="employeename != null">
+                and employeename like concat('%',#{employeename},'%')
+            </if>
+            <if test="username != null">
+                and username like concat('%',#{username},'%')
+            </if>
+        </where>
+    </select>
 </mapper>
