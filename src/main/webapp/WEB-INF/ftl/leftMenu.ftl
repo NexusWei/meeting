@@ -26,7 +26,7 @@
             <#if currentuser ?? &&(currentuser.role==2)>
                 <li class="sidebar-menuitem"><a href="/admin/addmeetingroom.ftl">添加会议室</a></li>
             </#if>
-            <li class="sidebar-menuitem"><a href="meetingrooms.ftl">查看会议室</a></li>
+            <li class="sidebar-menuitem"><a href="/admin/meetingrooms">查看会议室/a></li>
             <li class="sidebar-menuitem"><a href="bookmeeting.ftl">预定会议</a></li>
             <li class="sidebar-menuitem"><a href="searchmeetings.ftl">搜索会议</a></li>
         </ul>
