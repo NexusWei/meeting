@@ -49,4 +49,8 @@
             </if>
         </where>
     </select>
+
+    <select id="getEmpsByDepId" resultType="com.nexus.meeting.model.Employee">
+        select * from employee where departmentid = #{depId}
+    </select>
 </mapper>

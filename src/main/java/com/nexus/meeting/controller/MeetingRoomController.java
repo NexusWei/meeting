@@ -18,4 +18,31 @@ public class MeetingRoomController {
         model.addAttribute("mrs", meetingRoomService.getAllMr());
         return "meetingrooms";
     }
+
+    @RequestMapping("/roomdetails")
+    public String roomdetails(Integer roomid, Model model) {
+        model.addAttribute("mr", meetingRoomService.getMrById(roomid));
+        return "roomdetails";
+    }
+
+    @RequestMapping("/updateroom")
+    public String updateroom(MeetingRoom meetingRoom) {
+        Integer result = meetingRoomService.updateroom(meetingRoom);
+        if (result == 1) {
+            return "redirect:/admin/meetingrooms";
+        }else {
+            return "forward:/roomdetails";
+        }
+    }
+
+    @RequestMapping("/addmeetingroom")
+    public String addmeetingroom() {
+        return "addmeetingroom";
+    }
+
+    @RequestMapping("doAddMr")
+    public String doAddMr(MeetingRoom meetingRoom, Model model) {
+        meetingRoomService.addMr(meetingRoom);
+        return "redirect:/admin/meetingrooms";
+    }
 }

@@ -50,4 +50,8 @@ public class EmployeeService {
     public Long getTotal(Employee employee) {
         return employeeMapper.getTotal(employee);
     }
+
+    public List<Employee> getEmpsByDepId(Integer depId) {
+        return employeeMapper.getEmpsByDepId(depId);
+    }
 }

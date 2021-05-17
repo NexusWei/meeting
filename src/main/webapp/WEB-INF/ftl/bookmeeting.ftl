@@ -2,7 +2,9 @@
 <html>
     <head>
         <title>CoolMeeting会议管理系统</title>
-        <link rel="stylesheet" href="styles/common.css"/>
+        <link rel="stylesheet" href="/styles/common.css"/>
+        <script src="/styles/jquery.js"></script>
+        <script src="/My97DatePicker/WdatePicker.js"></script>
         <style type="text/css">
             #divfrom{
                 float:left;
@@ -64,32 +66,50 @@
                 selEmployees = document.getElementById("selEmployees");
                 selSelectedEmployees = document.getElementById("selSelectedEmployees");
                 
-                for(var i=0;i<data.length;i++){
-                    var dep = document.createElement("option");
-                    dep.value = data[i].departmentid;
-                    dep.text = data[i].departmentname;
-                    selDepartments.appendChild(dep);
-                }
-                
-                fillEmployees();
+                // for(var i=0;i<data.length;i++){
+                //     var dep = document.createElement("option");
+                //     dep.value = data[i].departmentid;
+                //     dep.text = data[i].departmentname;
+                //     selDepartments.appendChild(dep);
+                // }
+
+                $.get("/admin/alldeps", function (data){
+                    for (let i = 0; i <data.length; i++){
+                        let item = data[i];
+                        let dep = document.createElement("option");
+                        dep.value = item.departmentid;
+                        dep.text = item.departmentname;
+                        selDepartments.appendChild(dep);
+                    }
+                    fillEmployees();
+                })
+                // fillEmployees();
             }
             
             function fillEmployees(){
                 clearList(selEmployees);
                 var departmentid = selDepartments.options[selDepartments.selectedIndex].value;
-                var employees;
-                for(var i=0;i<data.length;i++){
-                    if (departmentid == data[i].departmentid){
-                        employees = data[i].employees;
-                        break;
+                // var employees;
+                $.get("/admin/getempbydepid?depId="+departmentid, function (data) {
+                    for (i = 0; i < data.length; i++) {
+                        let emp = document.createElement("option");
+                        emp.value = data[i].employeeid;
+                        emp.text = data[i].employeename;
+                        selEmployees.appendChild(emp);
                     }
-                }
-                for(i=0;i<employees.length;i++){
-                    var emp = document.createElement("option");
-                    emp.value = employees[i].employeeid;
-                    emp.text = employees[i].employeename;
-                    selEmployees.appendChild(emp);
-                }
+                })
+                // for(var i=0;i<data.length;i++){
+                //     if (departmentid == data[i].departmentid){
+                //         employees = data[i].employees;
+                //         break;
+                //     }
+                // }
+                // for(i=0;i<employees.length;i++){
+                //     var emp = document.createElement("option");
+                //     emp.value = employees[i].employeeid;
+                //     emp.text = employees[i].employeename;
+                //     selEmployees.appendChild(emp);
+                // }
             }
             
             function clearList(list){
@@ -136,6 +156,7 @@
                 var opt = document.createElement("option");
                 opt.value = optEmployee.value;
                 opt.text = optEmployee.text;
+                opt.selected = true;
                 
                 if (insertIndex == -1){
                     selSelectedEmployees.appendChild(opt);
@@ -153,50 +174,48 @@
                 <div class="content-nav">
                     会议预定 > 预定会议
                 </div>
-                <form>
+                <form action="/admin/doAddMeeting" method="post">
                     <fieldset>
                         <legend>会议信息</legend>
                         <table class="formtable">
                             <tr>
                                 <td>会议名称：</td>
                                 <td>
-                                    <input type="text" id="meetingname" maxlength="20"/>
+                                    <input type="text" id="meetingname" name="meetingname" maxlength="20"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>预计参加人数：</td>
                                 <td>
-                                    <input type="text" id="numofattendents" />
+                                    <input type="text" id="numofattendents" name="numofattendents" />
                                 </td>
                             </tr>
                             <tr>
                                 <td>预计开始时间：</td>
                                 <td>
-                                    <input type="date" id="startdate"/>
-                                    <input type="time" id="starttime"/>
+                                    <input type="text" id="starttime" name="starttime" onclick="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss'})"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>预计结束时间：</td>
                                 <td>
-                                    <input type="date" id="enddate" />
-                                    <input type="time" id="endtime" />
+                                    <input type="text" id="endtime" name="endtime" onclick="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss'})"/>
                                 </td>
                             </tr>
 							<tr>
                                 <td>会议室名称：</td>
                                 <td>
-                                    <select name="roomid">    
-                                     	<option value="1">第一会议室</option>
-                                     	<option value="2">第二会议室</option>
-										<option value="3">第三会议室</option>
+                                    <select name="roomid">
+                                        <#list mrs as mr>
+                                            <option value="${mr.roomid}">${mr.roomname}</option>
+                                        </#list>
                                      </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td>会议说明：</td>
                                 <td>
-                                    <textarea id="description" rows="5"></textarea>
+                                    <textarea id="description" name="description" rows="5"></textarea>
                                 </td>
                             </tr>
                             <tr>
@@ -213,7 +232,7 @@
                                         <input type="button" class="clickbutton" value="&lt;" onclick="deSelectEmployees()"/>
                                     </div>
                                     <div id="divto">
-                                        <select id="selSelectedEmployees" multiple="true">
+                                        <select id="selSelectedEmployees" name="mps" multiple="true">
                                         </select>
                                     </div>
                                 </td>
@@ -232,7 +251,7 @@
         <div class="page-footer">
             <hr/>
             更多问题，欢迎联系管理员
-            <img src="images/footer.png" alt="CoolMeeting"/>
+            <img src="/images/footer.png" alt="CoolMeeting"/>
         </div>
     </body>
 </html>

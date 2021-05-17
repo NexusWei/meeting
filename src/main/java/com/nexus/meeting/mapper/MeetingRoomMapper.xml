@@ -8,4 +8,50 @@
         select * from meetingroom
     </select>
 
+    <select id="getMrById" resultType="com.nexus.meeting.model.MeetingRoom">
+        select * from meetingroom where roomid = #{roomid}
+    </select>
+
+    <update id="updateroom" parameterType="com.nexus.meeting.model.MeetingRoom">
+        update meetingroom set roomnum = #{roomnum}, roomname=#{roomname},capacity=#{capacity},status=#{status},description=#{description} where roomid = #{roomid}
+    </update>
+
+    <insert id="addMr" parameterType="com.nexus.meeting.model.MeetingRoom">
+        insert into meetingroom
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roomnum != null">
+                roomnum,
+            </if>
+            <if test="roomname != null">
+                roomname,
+            </if>
+            <if test="capacity != null">
+                capacity,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="description != null">
+                description
+            </if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roomnum != null">
+                #{roomnum},
+            </if>
+            <if test="roomname != null">
+                #{roomname},
+            </if>
+            <if test="capacity != null">
+                #{capacity},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="description != null">
+                #{description},
+            </if>
+        </trim>
+    </insert>
 </mapper>

@@ -2,9 +2,12 @@
     <div class="sidebar-menugroup">
         <div class="sidebar-grouptitle">个人中心</div>
         <ul class="sidebar-menu">
-            <li class="sidebar-menuitem"><a href="notifications.ftl">最新通知</a></li>
-            <li class="sidebar-menuitem active"><a href="mybookings.ftl">我的预定</a></li>
-            <li class="sidebar-menuitem"><a href="mymeetings.ftl">我的会议</a></li>
+<#--            <li class="sidebar-menuitem"><a href="notifications.ftl">最新通知</a></li>-->
+            <li class="sidebar-menuitem"><a href="/admin/notifications">最新通知</a></li>
+<#--            <li class="sidebar-menuitem active"><a href="mybookings.ftl">我的预定</a></li>-->
+            <li class="sidebar-menuitem active"><a href="/admin/mybookings">我的预定</a></li>
+            <li class="sidebar-menuitem"><a href="/admin/mymeetings">我的会议</a></li>
+<#--            <li class="sidebar-menuitem"><a href="mymeetings.ftl">我的会议</a></li>-->
         </ul>
     </div>
     <div class="sidebar-menugroup">
@@ -24,11 +27,12 @@
         <ul class="sidebar-menu">
             <#-- 只有管理员能看到的菜单 -->
             <#if currentuser ?? &&(currentuser.role==2)>
-                <li class="sidebar-menuitem"><a href="/admin/addmeetingroom.ftl">添加会议室</a></li>
+                <li class="sidebar-menuitem"><a href="/admin/addmeetingroom">添加会议室</a></li>
             </#if>
-            <li class="sidebar-menuitem"><a href="/admin/meetingrooms">查看会议室/a></li>
-            <li class="sidebar-menuitem"><a href="bookmeeting.ftl">预定会议</a></li>
-            <li class="sidebar-menuitem"><a href="searchmeetings.ftl">搜索会议</a></li>
+            <li class="sidebar-menuitem"><a href="/admin/meetingrooms">查看会议室</a></li>
+            <li class="sidebar-menuitem"><a href="/admin/bookmeeting">预定会议</a></li>
+            <li class="sidebar-menuitem"><a href="/admin/searchmeetings">搜索会议</a></li>
+<#--            <li class="sidebar-menuitem"><a href="searchmeetings.ftl">搜索会议</a></li>-->
         </ul>
     </div>
 </div>

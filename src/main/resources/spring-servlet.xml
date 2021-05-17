@@ -12,6 +12,17 @@
     </context:component-scan>
     <mvc:annotation-driven />
 
+    <bean class="org.springframework.format.support.FormattingConversionServiceFactoryBean" id="conversionService">
+        <property name="converters">
+            <set>
+                <ref bean="dateConverter" />
+            </set>
+        </property>
+    </bean>
+    <bean class="com.nexus.meeting.converter.DateConverter" id="dateConverter" />
+    <mvc:annotation-driven conversion-service="conversionService">
+    </mvc:annotation-driven>
+
     <!-- 放行静态资源 -->
     <mvc:resources mapping="/**" location="/" />
 
@@ -23,6 +34,7 @@
             <!-- 排除的路径，不用进拦截器 -->
             <mvc:exclude-mapping path="/images/**"/>
             <mvc:exclude-mapping path="/styles/**"/>
+            <mvc:exclude-mapping path="/My97DatePicker/**"/>
             <!-- 配置的bean -->
             <bean class="com.nexus.meeting.interceptor.PermissInterceptor" />
         </mvc:interceptor>

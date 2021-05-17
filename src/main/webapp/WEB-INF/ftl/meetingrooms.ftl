@@ -22,7 +22,7 @@
                         <th>操作</th>
                     </tr>
 
-                    <if mrs??>
+                    <#if mrs??>
                         <#list mrs as mr>
                             <tr>
                                 <td>${mr.roomnum}</td>
@@ -30,11 +30,11 @@
                                 <td>${mr.capacity}</td>
                                 <td>${(mr.status==0)?string('启用','已占用')}</td>
                                 <td>
-                                    <a class="clickbutton" href="roomdetails.ftl">查看详情</a>
+                                    <a class="clickbutton" href="/admin/roomdetails?roomid=${mr.roomid}">查看详情</a>
                                 </td>
                             </tr>
                         </#list>
-                    </if>
+                    </#if>
 
                 </table>
             </div>

@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>CoolMeeting会议管理系统</title>
-        <link rel="stylesheet" href="styles/common.css"/>
+        <link rel="stylesheet" href="/styles/common.css"/>
         <style type="text/css">
             
         </style>
@@ -201,7 +201,7 @@
         <div class="page-footer">
             <hr/>
             更多问题，欢迎联系管理员
-            <img src="images/footer.png" alt="CoolMeeting"/>
+            <img src="/images/footer.png" alt="CoolMeeting"/>
         </div>
     </body>
 </html>

@@ -15,4 +15,16 @@ public class MeetingRoomService {
     public List<MeetingRoom> getAllMr() {
         return meetingRoomMapper.getAllMr();
     }
+
+    public MeetingRoom getMrById(Integer roomid) {
+        return meetingRoomMapper.getMrById(roomid);
+    }
+
+    public Integer updateroom(MeetingRoom meetingRoom) {
+        return meetingRoomMapper.updateroom(meetingRoom);
+    }
+
+    public Integer addMr(MeetingRoom meetingRoom) {
+        return meetingRoomMapper.addMr(meetingRoom);
+    }
 }
