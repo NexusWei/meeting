@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
     <head>
         <title>CoolMeeting会议管理系统</title>
         <link rel="stylesheet" href="/styles/common.css"/>
         <style type="text/css">
-            
         </style>
+
+
     </head>
     <body>
         <#include 'top.ftl'>
@@ -64,6 +65,9 @@
                             共<span class="info-number">${total}</span>条结果，
                             分成<span class="info-number">${pagenum}</span>页显示，
                             当前第<span class="info-number">${page}</span>页
+
+                            <#-- 隐藏域，分成多少页显示的值，从这里取 -->
+                            <input id="pagenum" type="text" hidden value="${pagenum}">
                         </div>
 
                         <div class="header-nav">
@@ -76,8 +80,8 @@
                             </#if>
                             <a type="button" class="clickbutton" href="/admin/searchmeetings?page=${pagenum}&meetingname=<#if meeting??>${meeting.meetingname!''}</#if>&roomname=<#if meetingroom??>${meetingroom.roomname!''}</#if>&employeename=<#if employee??>${employee.employeename!''}</#if>">末页</a>
 
-                            跳到第<input type="text" id="pagenum" class="nav-number"/>页
-                            <input type="button" class="clickbutton" value="跳转"/>
+                            跳到第<input type="text" id="pagenumber" name="pagenumber" class="nav-number" />页
+                            <a type="submit" id="jumphref" class="clickbutton" onclick="jumphref()">跳转</a>
                         </div>
                     </div>
                 </div>
@@ -114,5 +118,26 @@
             更多问题，欢迎联系管理员
             <img src="/images/footer.png" alt="CoolMeeting"/>
         </div>
+
+        <#-- freemarker实现跳转实在困难，毫无头绪，还是用js吧。 -->
+        <script src="/styles/jquery.js"></script>
+        <script type="text/javascript">
+            function jumphref()
+            {
+                let pagenumber = $("#pagenumber").val();
+                let meetingname = $("#meetingname").val();
+                let roomname = $("#roomname").val();
+                let employeename = $("#employeename").val();
+                let pagenum = $("#pagenum").val();
+                let error = $("#error")
+
+                if (pagenumber <= pagenum){
+                    $("#jumphref").attr("href","/admin/searchmeetings?page="+pagenumber+"&meetingname="+meetingname+"&roomname="+roomname+"&employeename="+employeename);
+                }else {
+                    $("#jumphref").attr("href","/admin/searchmeetings?page="+pagenum+"&meetingname="+meetingname+"&roomname="+roomname+"&employeename="+employeename);
+                }
+            }
+        </script>
+
     </body>
 </html>
