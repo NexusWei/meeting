@@ -22,15 +22,16 @@
                             <tr>
                                 <td>会议名称：</td>
                                 <td>
-                                    <input type="text" id="meetingname" maxlength="20"/>
+                                    <!-- value实现查询后回填的功能 -->
+                                    <input type="text" value="<#if meeting??>${meeting.meetingname!''}</#if>" id="meetingname" name="meetingname" maxlength="20" />
                                 </td>
                                 <td>会议室名称：</td>
                                 <td>
-                                    <input type="text" id="roomname" maxlength="20"/>
+                                    <input type="text" value="<#if meetingroom??>${meetingroom.roomname!''}</#if>" id="roomname" name="roomname" maxlength="20"/>
                                 </td>
                                 <td>预定者姓名：</td>
                                 <td>
-                                    <input type="text" id="reservername" maxlength="20"/>
+                                    <input type="text" value="<#if employee??>${employee.employeename!''}</#if>" id="employeename" name="employeename" maxlength="20"/>
                                 </td>
                             </tr>
                             <tr>
@@ -49,7 +50,7 @@
                             </tr>
                             <tr>
                                 <td colspan="6" class="command">
-                                    <input type="button" class="clickbutton" value="查询"/>
+                                    <input type="submit" class="clickbutton" value="查询"/>
                                     <input type="reset" class="clickbutton" value="重置"/>
                                 </td>
                             </tr>
@@ -60,15 +61,21 @@
                     <h3 style="text-align:center;color:black">查询结果</h3>
                     <div class="pager-header">
                         <div class="header-info">
-                            共<span class="info-number">54</span>条结果，
-                            分成<span class="info-number">6</span>页显示，
-                            当前第<span class="info-number">1</span>页
+                            共<span class="info-number">${total}</span>条结果，
+                            分成<span class="info-number">${pagenum}</span>页显示，
+                            当前第<span class="info-number">${page}</span>页
                         </div>
+
                         <div class="header-nav">
-                            <input type="button" class="clickbutton" value="首页"/>
-                            <input type="button" class="clickbutton" value="上页"/>
-                            <input type="button" class="clickbutton" value="下页"/>
-                            <input type="button" class="clickbutton" value="末页"/>
+                            <a type="button" class="clickbutton" href="/admin/searchmeetings?page=1&meetingname=<#if meeting??>${meeting.meetingname!''}</#if>&roomname=<#if meetingroom??>${meetingroom.roomname!''}</#if>&employeename=<#if employee??>${employee.employeename!''}</#if>">首页</a>
+                            <#if 1<page>
+                                <a type="button" class="clickbutton" href="/admin/searchmeetings?page=${page-1}&meetingname=<#if meeting??>${meeting.meetingname!''}</#if>&roomname=<#if meetingroom??>${meetingroom.roomname!''}</#if>&employeename=<#if employee??>${employee.employeename!''}</#if>">上页</a>
+                            </#if>
+                            <#if page<pagenum>
+                                <a type="button" class="clickbutton" href="/admin/searchmeetings?page=${page+1}&meetingname=<#if meeting??>${meeting.meetingname!''}</#if>&roomname=<#if meetingroom??>${meetingroom.roomname!''}</#if>&employeename=<#if employee??>${employee.employeename!''}</#if>">下页</a>
+                            </#if>
+                            <a type="button" class="clickbutton" href="/admin/searchmeetings?page=${pagenum}&meetingname=<#if meeting??>${meeting.meetingname!''}</#if>&roomname=<#if meetingroom??>${meetingroom.roomname!''}</#if>&employeename=<#if employee??>${employee.employeename!''}</#if>">末页</a>
+
                             跳到第<input type="text" id="pagenum" class="nav-number"/>页
                             <input type="button" class="clickbutton" value="跳转"/>
                         </div>

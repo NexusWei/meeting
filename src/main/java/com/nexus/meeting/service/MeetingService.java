@@ -1,7 +1,9 @@
 package com.nexus.meeting.service;
 
 import com.nexus.meeting.mapper.MeetingMapper;
+import com.nexus.meeting.model.Employee;
 import com.nexus.meeting.model.Meeting;
+import com.nexus.meeting.model.MeetingRoom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +23,12 @@ public class MeetingService {
         return result;
     }
 
+    public List<Meeting> getAllMeetings(Employee employee, MeetingRoom meetingroom, Meeting meeting, Integer page, Integer pageSize) {
+        page = (page - 1) * pageSize;
+        return meetingMapper.getAllMeetings(employee, meetingroom, meeting, page, pageSize);
+    }
 
-    public List<Meeting> getAllMeetings() {
-        return meetingMapper.getAllMeetings();
+    public Long getTotal(Employee employee, Meeting meeting, MeetingRoom meetingRoom) {
+        return meetingMapper.getTotal(employee, meeting, meetingRoom);
     }
 }

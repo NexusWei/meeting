@@ -33,6 +33,34 @@
             meeting.roomid = meetingroom.roomid
 	    and
 	        employee.employeeid = meeting.reservationistid
+        <if test="meeting.meetingname != null">
+            and meeting.meetingname like concat('%', #{meeting.meetingname}, '%')
+        </if>
+        <if test="meetingroom.roomname != null">
+            and meetingroom.roomname like concat('%', #{meetingroom.roomname}, '%')
+        </if>
+        <if test="employee.employeename != null">
+            and employee.employeename like concat('%', #{employee.employeename}, '%')
+        </if>
+	    limit #{page}, #{pageSize}
+    </select>
+
+    <!-- 这里inner join 必须在 where 前面，否则SQL执行无法通过 -->
+    <select id="getTotal" resultType="java.lang.Long">
+        select count(*) from meeting
+        <if test="meetingroom.roomname != null">
+            inner JOIN meetingroom ON meeting.roomid = meetingroom.roomid
+            and meetingroom.roomname LIKE CONCAT('%', #{meetingroom.roomname}, '%')
+        </if>
+        <if test="employee.employeename != null">
+            inner JOIN employee on employee.employeeid = meeting.reservationistid
+            and employee.employeename LIKE CONCAT('%', #{employee.employeename}, '%')
+        </if>
+        <where>
+            <if test="meeting.meetingname != null">
+                meeting.meetingname like concat('%', #{meeting.meetingname}, '%')
+            </if>
+        </where>
     </select>
 
 </mapper>

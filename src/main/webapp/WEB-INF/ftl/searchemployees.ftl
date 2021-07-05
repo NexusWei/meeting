@@ -71,16 +71,16 @@
                             当前第<span class="info-number">${page}</span>页
                         </div>
                         <div class="header-nav">
-                            <a type="button" class="clickbutton" href="/admin/searchemployees?page=1" >首页</a>
+                            <a type="button" class="clickbutton" href="/admin/searchemployees?page=1&employeename=<#if employee??>${employee.employeename!''}</#if>&username=<#if employee??>${employee.username!''}</#if>&status=<#if employee??>${employee.status!''}</#if>" >首页</a>
                             <!-- 第一页时，上页按钮隐藏-->
                             <#if 1 < page>
-                                <a type="button" class="clickbutton" href="/admin/searchemployees?page=${page-1}" >上页</a>
+                                <a type="button" class="clickbutton" href="/admin/searchemployees?page=${page-1}&employeename=<#if employee??>${employee.employeename!''}</#if>&username=<#if employee??>${employee.username!''}</#if>&status=<#if employee??>${employee.status!''}</#if>" >上页</a>
                             </#if>
                             <!-- 最后一页时，下页按钮隐藏-->
                             <#if page<pagenum>
-                                <a type="button" class="clickbutton" href="/admin/searchemployees?page=${page+1}" >下页</a>
+                                <a type="button" class="clickbutton" href="/admin/searchemployees?page=${page+1}&employeename=<#if employee??>${employee.employeename!''}</#if>&username=<#if employee??>${employee.username!''}</#if>&status=<#if employee??>${employee.status!''}</#if>" >下页</a>
                             </#if>
-                            <a type="button" class="clickbutton" href="/admin/searchemployees?page=${pagenum}" >末页</a>
+                            <a type="button" class="clickbutton" href="/admin/searchemployees?page=${pagenum}&employeename=<#if employee??>${employee.employeename!''}</#if>&username=<#if employee??>${employee.username!''}</#if>&status=<#if employee??>${employee.status!''}</#if>" >末页</a>
                         </div>
                     </div>
                 </div>

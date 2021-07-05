@@ -3,6 +3,7 @@ package com.nexus.meeting.controller;
 import com.nexus.meeting.model.Department;
 import com.nexus.meeting.model.Employee;
 import com.nexus.meeting.model.Meeting;
+import com.nexus.meeting.model.MeetingRoom;
 import com.nexus.meeting.service.DepartmentService;
 import com.nexus.meeting.service.EmployeeService;
 import com.nexus.meeting.service.MeetingRoomService;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
@@ -19,6 +21,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin")
 public class MeetingController {
+
+    // 每页默认显示的数量
+    public static final Integer PAGE_SIZE = 5;
 
     @Autowired
     MeetingRoomService meetingRoomService;
@@ -63,8 +68,14 @@ public class MeetingController {
     }
 
     @RequestMapping("/searchmeetings")
-    public String searchmeetings(Model model) {
-        model.addAttribute("meetings", meetingService.getAllMeetings());
+    public String searchmeetings(Employee employee, MeetingRoom meetingroom, Meeting meeting, Model model, @RequestParam(defaultValue = "1") Integer page) {
+        List<Meeting> meetings = meetingService.getAllMeetings(employee, meetingroom, meeting, page, PAGE_SIZE);
+        Long total = meetingService.getTotal(employee, meeting, meetingroom);
+        model.addAttribute("meetings", meetings);
+        model.addAttribute("meetingroom", meetingroom);
+        model.addAttribute("total", total);
+        model.addAttribute("page", page);
+        model.addAttribute("pagenum", total % PAGE_SIZE == 0 ? total / PAGE_SIZE : total / PAGE_SIZE + 1);
         return "searchmeetings";
     }
 }
