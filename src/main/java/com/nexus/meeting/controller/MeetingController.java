@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -68,14 +69,17 @@ public class MeetingController {
     }
 
     @RequestMapping("/searchmeetings")
-    public String searchmeetings(Employee employee, MeetingRoom meetingroom, Meeting meeting, Model model, @RequestParam(defaultValue = "1") Integer page) {
-        List<Meeting> meetings = meetingService.getAllMeetings(employee, meetingroom, meeting, page, PAGE_SIZE);
-        Long total = meetingService.getTotal(employee, meeting, meetingroom);
+    public String searchmeetings(@RequestParam(required = false) Date reservationtimefrom, @RequestParam(required = false) Date reservationtimeto, Employee employee, MeetingRoom meetingroom, Meeting meeting, Model model, @RequestParam(defaultValue = "1") Integer page) {
+        List<Meeting> meetings = meetingService.getAllMeetings(reservationtimefrom, reservationtimeto, employee, meetingroom, meeting, page, PAGE_SIZE);
+        Long total = meetingService.getTotal(reservationtimefrom, reservationtimeto, employee, meeting, meetingroom);
         model.addAttribute("meetings", meetings);
         model.addAttribute("meetingroom", meetingroom);
         model.addAttribute("total", total);
         model.addAttribute("page", page);
+        model.addAttribute("reservationtimefrom", reservationtimefrom);
+        model.addAttribute("reservationtimeto", reservationtimeto);
         model.addAttribute("pagenum", total % PAGE_SIZE == 0 ? total / PAGE_SIZE : total / PAGE_SIZE + 1);
+
         return "searchmeetings";
     }
 }

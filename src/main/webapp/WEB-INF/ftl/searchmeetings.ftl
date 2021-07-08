@@ -6,6 +6,7 @@
         <style type="text/css">
         </style>
 
+        <script src="/My97DatePicker/WdatePicker.js"></script>
 
     </head>
     <body>
@@ -36,17 +37,17 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>预定日期：</td>
+                                <td>预定时间：</td>
                                 <td colspan="5">
-                                    从&nbsp;<input type="date" id="reservefromdate" placeholder="例如：2013-10-20"/>
-                                    到&nbsp;<input type="date" id="reservetodate" placeholder="例如：2013-10-22"/>
+                                    从&nbsp;<input type="text" id="reservationtimefrom" name="reservationtimefrom" onclick="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss'})" value="<#if reservationtimefrom??>${(reservationtimefrom?string('yyyy-MM-dd HH:mm:ss'))!''}</#if>" />
+                                    到&nbsp;<input type="text" id="reservationtimeto" name="reservationtimeto" onclick="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss'})"  value="<#if reservationtimeto??>${(reservationtimeto?string('yyyy-MM-dd HH:mm:ss'))!''}</#if>" />前
                                 </td>
                             </tr>
                             <tr>
-                                <td>会议日期：</td>
+                                <td>会议时间：</td>
                                 <td colspan="5">
-                                    从&nbsp;<input type="date" id="meetingfromdate" placeholder="例如：2013-10-20"/>
-                                    到&nbsp;<input type="date" id="meetingtodate" placeholder="例如：2013-10-22"/>
+                                    从&nbsp;<input type="text" id="starttime" name="starttime" onclick="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss'})"  value="<#if meeting??>${(meeting.starttime?string('yyyy-MM-dd HH:mm:ss'))!''}</#if>" />
+                                    到&nbsp;<input type="text" id="endtime" name="endtime" onclick="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss'})"  value="<#if meeting??>${(meeting.endtime?string('yyyy-MM-dd HH:mm:ss'))!''}</#if>" />前
                                 </td>
                             </tr>
                             <tr>
@@ -71,14 +72,14 @@
                         </div>
 
                         <div class="header-nav">
-                            <a type="button" class="clickbutton" href="/admin/searchmeetings?page=1&meetingname=<#if meeting??>${meeting.meetingname!''}</#if>&roomname=<#if meetingroom??>${meetingroom.roomname!''}</#if>&employeename=<#if employee??>${employee.employeename!''}</#if>">首页</a>
+                                <a type="button" class="clickbutton" href="/admin/searchmeetings?page=1&meetingname=<#if meeting??>${meeting.meetingname!''}</#if>&roomname=<#if meetingroom??>${meetingroom.roomname!''}</#if>&employeename=<#if employee??>${employee.employeename!''}</#if>&reservationtimefrom=<#if reservationtimefrom??>${(reservationtimefrom?string('yyyy-MM-dd HH:mm:ss'))!''}</#if>&reservationtimeto=<#if reservationtimeto??>${(reservationtimeto?string('yyyy-MM-dd HH:mm:ss'))!''}</#if>&starttime=<#if meeting??>${(meeting.starttime?string('yyyy-MM-dd HH:mm:ss'))!''}</#if>&endtime=<#if meeting??>${(meeting.endtime?string('yyyy-MM-dd HH:mm:ss'))!''}</#if>">首页</a>
                             <#if 1<page>
-                                <a type="button" class="clickbutton" href="/admin/searchmeetings?page=${page-1}&meetingname=<#if meeting??>${meeting.meetingname!''}</#if>&roomname=<#if meetingroom??>${meetingroom.roomname!''}</#if>&employeename=<#if employee??>${employee.employeename!''}</#if>">上页</a>
+                                <a type="button" class="clickbutton" href="/admin/searchmeetings?page=${page-1}&meetingname=<#if meeting??>${meeting.meetingname!''}</#if>&roomname=<#if meetingroom??>${meetingroom.roomname!''}</#if>&employeename=<#if employee??>${employee.employeename!''}</#if>&reservationtimefrom=<#if reservationtimefrom??>${(reservationtimefrom?string('yyyy-MM-dd HH:mm:ss'))!''}</#if>&reservationtimeto=<#if reservationtimeto??>${(reservationtimeto?string('yyyy-MM-dd HH:mm:ss'))!''}</#if>&starttime=<#if meeting??>${(meeting.starttime?string('yyyy-MM-dd HH:mm:ss'))!''}</#if>&endtime=<#if meeting??>${(meeting.endtime?string('yyyy-MM-dd HH:mm:ss'))!''}</#if>">上页</a>
                             </#if>
                             <#if page<pagenum>
-                                <a type="button" class="clickbutton" href="/admin/searchmeetings?page=${page+1}&meetingname=<#if meeting??>${meeting.meetingname!''}</#if>&roomname=<#if meetingroom??>${meetingroom.roomname!''}</#if>&employeename=<#if employee??>${employee.employeename!''}</#if>">下页</a>
+                                <a type="button" class="clickbutton" href="/admin/searchmeetings?page=${page+1}&meetingname=<#if meeting??>${meeting.meetingname!''}</#if>&roomname=<#if meetingroom??>${meetingroom.roomname!''}</#if>&employeename=<#if employee??>${employee.employeename!''}</#if>&reservationtimefrom=<#if reservationtimefrom??>${(reservationtimefrom?string('yyyy-MM-dd HH:mm:ss'))!''}</#if>&reservationtimeto=<#if reservationtimeto??>${(reservationtimeto?string('yyyy-MM-dd HH:mm:ss'))!''}</#if>&starttime=<#if meeting??>${(meeting.starttime?string('yyyy-MM-dd HH:mm:ss'))!''}</#if>&endtime=<#if meeting??>${(meeting.endtime?string('yyyy-MM-dd HH:mm:ss'))!''}</#if>">下页</a>
                             </#if>
-                            <a type="button" class="clickbutton" href="/admin/searchmeetings?page=${pagenum}&meetingname=<#if meeting??>${meeting.meetingname!''}</#if>&roomname=<#if meetingroom??>${meetingroom.roomname!''}</#if>&employeename=<#if employee??>${employee.employeename!''}</#if>">末页</a>
+                            <a type="button" class="clickbutton" href="/admin/searchmeetings?page=${pagenum}&meetingname=<#if meeting??>${meeting.meetingname!''}</#if>&roomname=<#if meetingroom??>${meetingroom.roomname!''}</#if>&employeename=<#if employee??>${employee.employeename!''}</#if>&reservationtimefrom=<#if reservationtimefrom??>${(reservationtimefrom?string('yyyy-MM-dd HH:mm:ss'))!''}</#if>&reservationtimeto=<#if reservationtimeto??>${(reservationtimeto?string('yyyy-MM-dd HH:mm:ss'))!''}</#if>&starttime=<#if meeting??>${(meeting.starttime?string('yyyy-MM-dd HH:mm:ss'))!''}</#if>&endtime=<#if meeting??>${(meeting.endtime?string('yyyy-MM-dd HH:mm:ss'))!''}</#if>">末页</a>
 
                             跳到第<input type="text" id="pagenumber" name="pagenumber" class="nav-number" />页
                             <a type="submit" id="jumphref" class="clickbutton" onclick="jumphref()">跳转</a>
@@ -95,17 +96,29 @@
                         <th>预定者</th>
                         <th>操作</th>
                     </tr>
+                    <#--
+                        yy 	年
+                        M	年中的月份
+                        D	年中的天数
+                        d	月份中的天数
+                        H	一天中的小时数（0-23）
+                        h	am/pm 中的小时数（1-12）
+                        m	小时中的分钟数
+                        s	分钟中的秒数
+                        S	毫秒数
+                        所以连起来应该是 yy-MM-dd HH:mm:ss
+                    -->
                     <#if meetings ??>
                         <#list meetings as meeting>
                             <tr>
                                 <td>${meeting.meetingname}</td>
                                 <td>${meeting.roomname}</td>
-                                <td>${meeting.starttime?string('yyyy-MM-dd hh:mm:ss')}</td>
-                                <td>${meeting.endtime?string('yyyy-MM-dd hh:mm:ss')}</td>
-                                <td>${meeting.reservationtime?string('yyyy-MM-dd hh:mm:ss')}</td>
+                                <td>${meeting.starttime?string('yyyy-MM-dd HH:mm:ss')}</td>
+                                <td>${meeting.endtime?string('yyyy-MM-dd HH:mm:ss')}</td>
+                                <td>${meeting.reservationtime?string('yyyy-MM-dd HH:mm:ss')}</td>
                                 <td>${meeting.employeename}</td>
                                 <td>
-                                    <a class="clickbutton" href="meetingdetails.ftl">查看详情</a>
+                                    <a class="clickbutton" href="/admin/meetingdetails">查看详情</a>
                                 </td>
                             </tr>
                         </#list>
@@ -130,11 +143,15 @@
                 let employeename = $("#employeename").val();
                 let pagenum = $("#pagenum").val();
                 let error = $("#error")
+                let reservationtimefrom = $("#reservationtimefrom").val();
+                let reservationtimeto = $("#reservationtimeto").val();
+                let starttime = $("#starttime").val();
+                let endtime = $("#endtime").val();
 
                 if (pagenumber <= pagenum){
-                    $("#jumphref").attr("href","/admin/searchmeetings?page="+pagenumber+"&meetingname="+meetingname+"&roomname="+roomname+"&employeename="+employeename);
+                    $("#jumphref").attr("href","/admin/searchmeetings?page="+pagenumber+"&meetingname="+meetingname+"&roomname="+roomname+"&employeename="+employeename+"&reservationtimefrom="+reservationtimefrom+"&reservationtimeto="+reservationtimeto+"&starttime="+starttime+"&endtime="+endtime);
                 }else {
-                    $("#jumphref").attr("href","/admin/searchmeetings?page="+pagenum+"&meetingname="+meetingname+"&roomname="+roomname+"&employeename="+employeename);
+                    $("#jumphref").attr("href","/admin/searchmeetings?page="+pagenum+"&meetingname="+meetingname+"&roomname="+roomname+"&employeename="+employeename+"&reservationtimefrom="+reservationtimefrom+"&reservationtimeto="+reservationtimeto+"&starttime="+starttime+"&endtime="+endtime);
                 }
             }
         </script>

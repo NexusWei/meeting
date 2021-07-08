@@ -23,12 +23,12 @@ public class MeetingService {
         return result;
     }
 
-    public List<Meeting> getAllMeetings(Employee employee, MeetingRoom meetingroom, Meeting meeting, Integer page, Integer pageSize) {
+    public List<Meeting> getAllMeetings(Date reservationtimefrom, Date reservationtimeto, Employee employee, MeetingRoom meetingroom, Meeting meeting, Integer page, Integer pageSize) {
         page = (page - 1) * pageSize;
-        return meetingMapper.getAllMeetings(employee, meetingroom, meeting, page, pageSize);
+        return meetingMapper.getAllMeetings(reservationtimefrom, reservationtimeto, employee, meetingroom, meeting, page, pageSize);
     }
 
-    public Long getTotal(Employee employee, Meeting meeting, MeetingRoom meetingRoom) {
-        return meetingMapper.getTotal(employee, meeting, meetingRoom);
+    public Long getTotal(Date reservationtimefrom, Date reservationtimeto, Employee employee, Meeting meeting, MeetingRoom meetingRoom) {
+        return meetingMapper.getTotal(reservationtimefrom, reservationtimeto, employee, meeting, meetingRoom);
     }
 }

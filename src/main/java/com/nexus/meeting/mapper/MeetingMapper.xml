@@ -33,14 +33,29 @@
             meeting.roomid = meetingroom.roomid
 	    and
 	        employee.employeeid = meeting.reservationistid
-        <if test="meeting.meetingname != null">
+        <if test="meeting.meetingname != null and meeting.meetingname != ''">
             and meeting.meetingname like concat('%', #{meeting.meetingname}, '%')
         </if>
-        <if test="meetingroom.roomname != null">
+        <if test="meetingroom.roomname != null and meetingroom.roomname != ''">
             and meetingroom.roomname like concat('%', #{meetingroom.roomname}, '%')
         </if>
-        <if test="employee.employeename != null">
+        <if test="employee.employeename != null and employee.employeename != ''">
             and employee.employeename like concat('%', #{employee.employeename}, '%')
+        </if>
+        <!-- meeting.starttime != '' 这样的语句就相当于date和String比较，会导致出现错误
+             invalid comparison: java.util.Date and java.lang.String
+             -->
+        <if test="meeting.starttime != null">
+            and meeting.starttime <![CDATA[>=]]> #{meeting.starttime}
+        </if>
+        <if test="meeting.endtime != null">
+            and meeting.endtime <![CDATA[<=]]> #{meeting.endtime}
+        </if>
+        <if test="reservationtimefrom != null">
+            and meeting.reservationtime <![CDATA[>=]]> #{reservationtimefrom}
+        </if>
+        <if test="reservationtimeto != null">
+            and meeting.reservationtime <![CDATA[<=]]> #{reservationtimeto}
         </if>
 	    limit #{page}, #{pageSize}
     </select>
@@ -48,17 +63,32 @@
     <!-- 这里inner join 必须在 where 前面，否则SQL执行无法通过 -->
     <select id="getTotal" resultType="java.lang.Long">
         select count(*) from meeting
-        <if test="meetingroom.roomname != null">
+        <if test="meetingroom.roomname != null and meetingroom.roomname != ''">
             inner JOIN meetingroom ON meeting.roomid = meetingroom.roomid
             and meetingroom.roomname LIKE CONCAT('%', #{meetingroom.roomname}, '%')
         </if>
-        <if test="employee.employeename != null">
+        <if test="employee.employeename != null and employee.employeename != ''">
             inner JOIN employee on employee.employeeid = meeting.reservationistid
             and employee.employeename LIKE CONCAT('%', #{employee.employeename}, '%')
         </if>
         <where>
-            <if test="meeting.meetingname != null">
+            <if test="meeting.meetingname != null and meeting.meetingname != ''">
                 meeting.meetingname like concat('%', #{meeting.meetingname}, '%')
+            </if>
+            <if test="reservationtimefrom != null">
+                and meeting.reservationtime <![CDATA[>=]]> #{reservationtimefrom}
+            </if>
+            <if test="reservationtimeto != null">
+                and meeting.reservationtime <![CDATA[<=]]> #{reservationtimeto}
+            </if>
+            <!-- meeting.starttime != '' 这样的语句就相当于date和String比较，会导致出现错误
+             invalid comparison: java.util.Date and java.lang.String
+             -->
+            <if test="meeting.starttime != null">
+                and meeting.starttime <![CDATA[>=]]> #{meeting.starttime}
+            </if>
+            <if test="meeting.endtime != null">
+                and meeting.endtime <![CDATA[<=]]> #{meeting.endtime}
             </if>
         </where>
     </select>
