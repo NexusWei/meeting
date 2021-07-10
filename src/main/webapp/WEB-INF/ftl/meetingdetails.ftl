@@ -151,7 +151,7 @@
             <#include 'leftMenu.ftl'>
             <div class="page-content">
                 <div class="content-nav">
-                    会议预定 > 修改会议预定
+                    搜索会议 > 会议详情
                 </div>
                 <form>
                     <fieldset>
@@ -159,25 +159,25 @@
                         <table class="formtable">
                             <tr>
                                 <td>会议名称：</td>
-                                <td>市场部总结会议</td>
+                                <td>${mt.meetingname}</td>
                             </tr>
                             <tr>
                                 <td>预计参加人数：</td>
-                                <td>15</td>
+                                <td>${mt.numberofparticipants}</td>
                             </tr>
                             <tr>
                                 <td>预计开始时间：</td>
-                                <td>2013-10-21 14:50</td>
+                                <td>${mt.starttime?string('yyyy-MM-dd HH:mm:ss')}</td>
                             </tr>
                             <tr>
                                 <td>预计结束时间：</td>
-                                <td>2013-10-21 18:50
+                                <td>${mt.endtime?string('yyyy-MM-dd HH:mm:ss')}
                                 </td>
                             </tr>
                             <tr>
                                 <td>会议说明：</td>
                                 <td>
-                                    <textarea id="description" rows="5" readonly>本会议将邀请专家参加。</textarea>
+                                    <textarea id="description" rows="5" readonly>${mt.description}</textarea>
                                 </td>
                             </tr>
                             <tr>
@@ -189,36 +189,15 @@
                                             <th>联系电话</th>
                                             <td>电子邮件</td>
                                         </tr>
-                                        <tr>
-                                            <td>Jerry</td>
-                                            <td>13800138000</td>
-                                            <td>jerry@chinasofti.com</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Jerry</td>
-                                            <td>13800138000</td>
-                                            <td>jerry@chinasofti.com</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Jerry</td>
-                                            <td>13800138000</td>
-                                            <td>jerry@chinasofti.com</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Jerry</td>
-                                            <td>13800138000</td>
-                                            <td>jerry@chinasofti.com</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Jerry</td>
-                                            <td>13800138000</td>
-                                            <td>jerry@chinasofti.com</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Jerry</td>
-                                            <td>13800138000</td>
-                                            <td>jerry@chinasofti.com</td>
-                                        </tr>
+                                        <#if emps ??>
+                                        <#list emps as emp>
+                                            <tr>
+                                                <td>${emp.employeename}</td>
+                                                <td>${emp.phone}</td>
+                                                <td>${emp.email}</td>
+                                            </tr>
+                                        </#list>
+                                        </#if>
                                     </table>
                                 </td>
                             </tr>

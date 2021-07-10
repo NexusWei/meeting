@@ -18,4 +18,9 @@ public interface MeetingMapper {
     List<Meeting> getAllMeetings(@Param("reservationtimefrom") Date reservationtimefrom, @Param("reservationtimeto") Date reservationtimeto, @Param("employee") Employee employee, @Param("meetingroom") MeetingRoom meetingroom, @Param("meeting") Meeting meeting, @Param("page") Integer page, @Param("pageSize") Integer pageSize);
 
     Long getTotal(@Param("reservationtimefrom") Date reservationtimefrom, @Param("reservationtimeto") Date reservationtimeto, @Param("employee") Employee employee, @Param("meeting") Meeting meeting, @Param("meetingroom") MeetingRoom meetingroom);
+
+    Meeting getMeetingById(@Param("meetingid") Integer meetingid);
+
+    List<Employee> getEmployeeByMeetingId(@Param("meetingid") Integer meetingid);
+
 }

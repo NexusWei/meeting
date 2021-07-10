@@ -34,7 +34,7 @@
                         <td>2013-10-10 16:00</td>
                         <td>Jerry</td>
                         <td>
-                            <a class="clickbutton" href="meetingdetails.ftl">查看详情</a>
+                            <a class="clickbutton" href="meetingdetails">查看详情</a>
                         </td>
                     </tr>
                     <tr>
