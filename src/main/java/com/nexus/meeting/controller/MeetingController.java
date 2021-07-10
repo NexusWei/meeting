@@ -82,4 +82,9 @@ public class MeetingController {
 
         return "searchmeetings";
     }
+
+    @RequestMapping("/meetingdetails")
+    public String meetingdetails() {
+        return "meetingdetails";
+    }
 }

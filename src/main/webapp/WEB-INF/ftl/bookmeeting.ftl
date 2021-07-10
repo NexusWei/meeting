@@ -187,7 +187,7 @@
                             <tr>
                                 <td>预计参加人数：</td>
                                 <td>
-                                    <input type="text" id="numofattendents" name="numofattendents" />
+                                    <input type="text" id="numberofparticipants" name="numberofparticipants" />
                                 </td>
                             </tr>
                             <tr>

@@ -6,7 +6,7 @@
 <mapper namespace="com.nexus.meeting.mapper.MeetingMapper">
     <insert id="addMeeting" parameterType="com.nexus.meeting.model.Meeting" useGeneratedKeys="true" keyProperty="meetingid">
         insert into meeting (meetingname, roomid, reservationistid, numberofparticipants, starttime, endtime, reservationtime, canceledtime, description, status)
-        values (#{meetingname},#{roomid},#{reservationistid},#{numberofparticipants},#{starttime},#{endtime},#{reservationtime},#{canceledtime},#{description},#{status})
+        values (#{meetingname},#{roomid},#{reservationistid},#{numberofparticipants},#{starttime},#{endtime},#{reservationtime},#{canceledtime},#{description},1)
     </insert>
 
     <insert id="addParticipants" parameterType="com.nexus.meeting.model.Meeting">
