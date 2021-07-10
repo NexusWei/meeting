@@ -84,10 +84,7 @@ public class MeetingController {
     }
 
     @RequestMapping("/meetingdetails")
-    public String meetingdetails(Integer meetingid, Model model) {
-        model.addAttribute("mt", meetingService.getMeetingById(meetingid));
-        model.addAttribute("emps", meetingService.getEmployeeByMeetingId(meetingid));
+    public String meetingdetails() {
         return "meetingdetails";
     }
-
 }

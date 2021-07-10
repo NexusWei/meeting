@@ -118,9 +118,8 @@
                                 <td>${meeting.reservationtime?string('yyyy-MM-dd HH:mm:ss')}</td>
                                 <td>${meeting.employeename}</td>
                                 <td>
-                                    <a class="clickbutton" href="/admin/meetingdetails?meetingid=${meeting.meetingid}">查看详情</a>
+                                    <a class="clickbutton" href="/admin/meetingdetails">查看详情</a>
                                 </td>
-<#--                                <td>${meeting.meetingid}</td>-->
                             </tr>
                         </#list>
                     </#if>
