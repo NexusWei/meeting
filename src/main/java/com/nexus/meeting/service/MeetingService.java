@@ -31,4 +31,13 @@ public class MeetingService {
     public Long getTotal(Date reservationtimefrom, Date reservationtimeto, Employee employee, Meeting meeting, MeetingRoom meetingRoom) {
         return meetingMapper.getTotal(reservationtimefrom, reservationtimeto, employee, meeting, meetingRoom);
     }
+
+    public Meeting getMeetingById(Integer meetingid){
+        return meetingMapper.getMeetingById(meetingid);
+    }
+
+    public List<Employee> getEmployeeByMeetingId(Integer meetingid) {
+        return meetingMapper.getEmployeeByMeetingId(meetingid);
+    }
+
 }

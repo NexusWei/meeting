@@ -19,6 +19,7 @@
 
     <select id="getAllMeetings" resultType="com.nexus.meeting.model.Meeting">
         SELECT
+            meeting.meetingid,
             meeting.meetingname,
             meetingroom.roomname,
             meeting.starttime,
@@ -93,4 +94,49 @@
         </where>
     </select>
 
+    <select id="getMeetingById" resultType="com.nexus.meeting.model.Meeting">
+        SELECT
+            meetingname,
+            numberofparticipants,
+            starttime,
+            endtime,
+            description
+        FROM
+            meeting
+        WHERE
+            meetingid = #{meetingid}
+    </select>
+
+    <select id="getEmployeeByMeetingId" resultType="com.nexus.meeting.model.Employee">
+        SELECT
+            employee.employeename,
+            employee.phone,
+            employee.email
+        FROM
+            meeting,
+            meetingparticipants,
+            employee
+        WHERE
+            meeting.meetingid = #{meetingid}
+            AND meeting.meetingid = meetingparticipants.meetingid
+            AND meetingparticipants.employeeid = employee.employeeid
+    </select>
+
+    <select id="getMeetingByEmployeeId" resultType="com.nexus.meeting.model.Meeting">
+        SELECT
+            meeting.meetingid,
+            meeting.meetingname,
+            meeting.numberofparticipants,
+            meeting.starttime,
+            meeting.endtime,
+            meeting.description
+        FROM
+            meeting,
+            meetingparticipants,
+            employee
+        WHERE
+            employee.employeeid = #{employeeid}
+            AND meeting.meetingid = meetingparticipants.meetingid
+            AND meetingparticipants.employeeid = employee.employeeid
+    </select>
 </mapper>
