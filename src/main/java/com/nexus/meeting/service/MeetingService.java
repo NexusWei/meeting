@@ -40,4 +40,16 @@ public class MeetingService {
         return meetingMapper.getEmployeeByMeetingId(meetingid);
     }
 
+    public List<Meeting> getMeetingByEmployeeId(Integer meetingid, Integer page, Integer pageSize) {
+        page = (page -1) * pageSize;
+        return meetingMapper.getMeetingByEmployeeId(meetingid, page, pageSize);
+    }
+
+    public Long getTotalMeetingByEmployeeId(Integer employeeid) {
+        return meetingMapper.getTotalMeetingByEmployeeId(employeeid);
+    }
+
+    public List<Meeting> getBookingByEmployeeId(Integer meetingid) {
+        return meetingMapper.getBookingByEmployeeId(meetingid);
+    }
 }

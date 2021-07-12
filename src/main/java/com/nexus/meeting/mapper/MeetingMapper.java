@@ -23,4 +23,10 @@ public interface MeetingMapper {
 
     List<Employee> getEmployeeByMeetingId(@Param("meetingid") Integer meetingid);
 
+    List<Meeting> getMeetingByEmployeeId(@Param("employeeid") Integer employeeid, @Param("page") Integer page, @Param("pageSize") Integer pageSize);
+
+    Long getTotalMeetingByEmployeeId(@Param("employeeid") Integer employeeid);
+
+    List<Meeting> getBookingByEmployeeId(@Param("employeeid") Integer employeeid);
+
 }

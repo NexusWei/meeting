@@ -124,19 +124,88 @@
 
     <select id="getMeetingByEmployeeId" resultType="com.nexus.meeting.model.Meeting">
         SELECT
+            mt.meetingid,
+            mt.roomname,
+            mt.meetingname,
+            mt.starttime,
+            mt.endtime,
+            mt.reservationtime,
+            e.employeename
+        FROM
+	    (
+            SELECT
+                meeting.meetingid AS meetingid,
+                meetingroom.roomname AS roomname,
+                meeting.meetingname AS meetingname,
+                meeting.starttime AS starttime,
+                meeting.endtime AS endtime,
+                meeting.reservationtime as reservationtime,
+                employee.employeeid AS employeeid,
+                meeting.roomid AS roomid,
+                meetingroom.roomid AS mrroomid,
+                meetingparticipants.meetingid AS mpmeetingid,
+                meetingparticipants.employeeid AS mpemployeeid
+            FROM
+                meeting,
+                meetingroom,
+                meetingparticipants,
+                employee
+        ) AS mt,
+        ( SELECT employee.employeename AS employeename, meeting.meetingid AS meetingid FROM meeting, employee WHERE meeting.reservationistid = employee.employeeid ) AS e
+        WHERE
+            mt.employeeid = #{employeeid}
+            AND mt.roomid = mt.mrroomid
+            AND mt.meetingid = mt.mpmeetingid
+            AND mpemployeeid = employeeid
+            AND e.meetingid = mt.meetingid
+        limit #{page}, #{pageSize}
+    </select>
+
+    <select id="getTotalMeetingByEmployeeId" resultType="java.lang.Long">
+        SELECT
+            count(*)
+        FROM
+	    (
+            SELECT
+                meeting.meetingid AS meetingid,
+                meetingroom.roomname AS roomname,
+                meeting.meetingname AS meetingname,
+                meeting.starttime AS starttime,
+                meeting.endtime AS endtime,
+                meeting.reservationtime as reservationtime,
+                employee.employeeid AS employeeid,
+                meeting.roomid AS roomid,
+                meetingroom.roomid AS mrroomid,
+                meetingparticipants.meetingid AS mpmeetingid,
+                meetingparticipants.employeeid AS mpemployeeid
+            FROM
+                meeting,
+                meetingroom,
+                meetingparticipants,
+                employee
+        ) AS mt,
+        ( SELECT employee.employeename AS employeename, meeting.meetingid AS meetingid FROM meeting, employee WHERE meeting.reservationistid = employee.employeeid ) AS e
+        WHERE
+            mt.employeeid = #{employeeid}
+            AND mt.roomid = mt.mrroomid
+            AND mt.meetingid = mt.mpmeetingid
+            AND mpemployeeid = employeeid
+            AND e.meetingid = mt.meetingid
+    </select>
+
+    <select id="getBookingByEmployeeId" resultType="com.nexus.meeting.model.Meeting">
+        SELECT
             meeting.meetingid,
+            meetingroom.roomname,
             meeting.meetingname,
-            meeting.numberofparticipants,
             meeting.starttime,
             meeting.endtime,
-            meeting.description
+            meeting.reservationtime
         FROM
             meeting,
-            meetingparticipants,
-            employee
+            meetingroom
         WHERE
-            employee.employeeid = #{employeeid}
-            AND meeting.meetingid = meetingparticipants.meetingid
-            AND meetingparticipants.employeeid = employee.employeeid
+            meeting.reservationistid = #{employeeid}
+            AND meeting.roomid = meetingroom.roomid
     </select>
 </mapper>

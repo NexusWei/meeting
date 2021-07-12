@@ -25,106 +25,21 @@
                         <th>会议预定时间</th>
                         <th>操作</th>
                     </tr>
-                    <tr>
-                        <td>业务洽谈会</td>
-                        <td>第一会议室</td>
-                        <td>2013-10-12 8:00</td>
-                        <td>2013-10-12 12:00</td>
-                        <td>2013-10-10 16:00</td>
-                        <td>
-                            <a class="clickbutton" href="mymeetingdetails.ftl">查看/撤销</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>业务洽谈会</td>
-                        <td>第一会议室</td>
-                        <td>2013-10-12 8:00</td>
-                        <td>2013-10-12 12:00</td>
-                        <td>2013-10-10 16:00</td>
-                        <td>
-                            <a class="clickbutton" href="mymeetingdetails.ftl">查看/撤销</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>业务洽谈会</td>
-                        <td>第一会议室</td>
-                        <td>2013-10-12 8:00</td>
-                        <td>2013-10-12 12:00</td>
-                        <td>2013-10-10 16:00</td>
-                        <td>
-                            <a class="clickbutton" href="mymeetingdetails.ftl">查看/撤销</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>业务洽谈会</td>
-                        <td>第一会议室</td>
-                        <td>2013-10-12 8:00</td>
-                        <td>2013-10-12 12:00</td>
-                        <td>2013-10-10 16:00</td>
-                        <td>
-                            <a class="clickbutton" href="mymeetingdetails.ftl">查看/撤销</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>业务洽谈会</td>
-                        <td>第一会议室</td>
-                        <td>2013-10-12 8:00</td>
-                        <td>2013-10-12 12:00</td>
-                        <td>2013-10-10 16:00</td>
-                        <td>
-                            <a class="clickbutton" href="mymeetingdetails.ftl">查看/撤销</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>业务洽谈会</td>
-                        <td>第一会议室</td>
-                        <td>2013-10-12 8:00</td>
-                        <td>2013-10-12 12:00</td>
-                        <td>2013-10-10 16:00</td>
-                        <td>
-                            <a class="clickbutton" href="mymeetingdetails.ftl">查看/撤销</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>业务洽谈会</td>
-                        <td>第一会议室</td>
-                        <td>2013-10-12 8:00</td>
-                        <td>2013-10-12 12:00</td>
-                        <td>2013-10-10 16:00</td>
-                        <td>
-                            <a class="clickbutton" href="mymeetingdetails.ftl">查看/撤销</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>业务洽谈会</td>
-                        <td>第一会议室</td>
-                        <td>2013-10-12 8:00</td>
-                        <td>2013-10-12 12:00</td>
-                        <td>2013-10-10 16:00</td>
-                        <td>
-                            <a class="clickbutton" href="mymeetingdetails.ftl">查看/撤销</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>业务洽谈会</td>
-                        <td>第一会议室</td>
-                        <td>2013-10-12 8:00</td>
-                        <td>2013-10-12 12:00</td>
-                        <td>2013-10-10 16:00</td>
-                        <td>
-                            <a class="clickbutton" href="mymeetingdetails.ftl">查看/撤销</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>业务洽谈会</td>
-                        <td>第一会议室</td>
-                        <td>2013-10-12 8:00</td>
-                        <td>2013-10-12 12:00</td>
-                        <td>2013-10-10 16:00</td>
-                        <td>
-                            <a class="clickbutton" href="mymeetingdetails.ftl">查看/撤销</a>
-                        </td>
-                    </tr>
+                    <#if meetings??>
+                        <#list meetings as meeting>
+                            <tr>
+                                <td>${meeting.roomname}</td>
+                                <td>${meeting.meetingname}</td>
+                                <td>${meeting.starttime?string('yyyy-MM-dd HH:mm:ss')}</td>
+                                <td>${meeting.endtime?string('yyyy-MM-dd HH:mm:ss')}</td>
+                                <td>${meeting.reservationtime?string('yyyy-MM-dd HH:mm:ss')}</td>
+                                <td>
+                                    <a class="clickbutton" href="meetingdetails?meetingid=${meeting.meetingid}">查看/取消</a>
+                                </td>
+                            </tr>
+                        </#list>
+                    </#if>
+
                 </table>
             </div>
         </div>
