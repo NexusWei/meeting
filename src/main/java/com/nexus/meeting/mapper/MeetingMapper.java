@@ -29,4 +29,6 @@ public interface MeetingMapper {
 
     List<Meeting> getBookingByEmployeeId(@Param("employeeid") Integer employeeid);
 
+    Integer updatemeeting(@Param("meetingid") Integer meetingid, @Param("cancelreason") String cancelreason);
+
 }

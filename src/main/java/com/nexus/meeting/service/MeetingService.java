@@ -52,4 +52,8 @@ public class MeetingService {
     public List<Meeting> getBookingByEmployeeId(Integer meetingid) {
         return meetingMapper.getBookingByEmployeeId(meetingid);
     }
+
+    public Integer updatemeeting(Integer meetingid, String cancelreason) {
+        return meetingMapper.updatemeeting(meetingid, cancelreason);
+    }
 }

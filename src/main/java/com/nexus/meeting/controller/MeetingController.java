@@ -79,7 +79,6 @@ public class MeetingController {
         model.addAttribute("reservationtimefrom", reservationtimefrom);
         model.addAttribute("reservationtimeto", reservationtimeto);
         model.addAttribute("pagenum", total % PAGE_SIZE == 0 ? total / PAGE_SIZE : total / PAGE_SIZE + 1);
-
         return "searchmeetings";
     }
 

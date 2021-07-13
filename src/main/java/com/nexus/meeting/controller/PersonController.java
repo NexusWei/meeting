@@ -5,6 +5,7 @@ import com.nexus.meeting.service.MeetingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -41,5 +42,29 @@ public class PersonController {
     public String mybookings(Model model, HttpSession httpSession) {
         model.addAttribute("meetings", meetingService.getBookingByEmployeeId(((Employee) httpSession.getAttribute("currentuser")).getEmployeeid()));
         return "mybookings";
+    }
+
+    @RequestMapping("mymeetingdetails")
+    public String mymeetingdetails(Integer meetingid, Model model) {
+        model.addAttribute("mt", meetingService.getMeetingById(meetingid));
+        model.addAttribute("emps", meetingService.getEmployeeByMeetingId(meetingid));
+        return "mymeetingdetails";
+    }
+
+    @RequestMapping("cancelmeeting")
+    public String cancelmeeting(Integer meetingid, Model model) {
+        model.addAttribute("mt", meetingService.getMeetingById(meetingid));
+        return "cancelmeeting";
+    }
+
+    @PostMapping("docancelmeeting")
+    public String docancelmeeting(Integer meetingid, String cancelreason) {
+        Integer result = meetingService.updatemeeting(meetingid, cancelreason);
+        if (result >= 1) {
+            System.out.println("取消会议成功");
+        }else {
+            System.out.println("取消会议失败");
+        }
+        return "redirect:/admin/mybookings";
     }
 }

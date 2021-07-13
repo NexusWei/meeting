@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>CoolMeeting会议管理系统</title>
-    <link rel="stylesheet" href="styles/common.css"/>
+    <link rel="stylesheet" href="/styles/common.css"/>
     <style type="text/css">
         #divfrom{
             float:left;
@@ -153,25 +153,25 @@
         <div class="content-nav">
             会议预定 > 撤销会议预定
         </div>
-        <form>
+        <form method="post" action="/admin/docancelmeeting?meetingid=${mt.meetingid}">
             <fieldset>
                 <legend>撤销预定</legend>
-                <table class="formtable">
+                <table class="formtable" >
                     <tr>
                         <td>会议名称：</td>
-                        <td>市场部总结会议</td>
-                    </tr>
-                    <tr>
-                        <td>撤销理由：</td>
-                        <td>15</td>
+                        <td>${mt.meetingname}</td>
                     </tr>
                     <tr>
                         <td>预计开始时间：</td>
-                        <td> <textarea id="description" rows="5">市场人员出差</textarea></td>
+                        <td>${mt.starttime?string('yyyy-MM-dd HH:mm:ss')}</td>
+                    </tr>
+                    <tr>
+                        <td>撤销理由：</td>
+                        <td><textarea id="cancelreason" name="cancelreason" rows="5"></textarea></td>
                     </tr>
                     <tr>
                         <td class="command" colspan="2">
-                            <input type="button" class="clickbutton" value="确认撤销"/>
+                            <input type="submit" class="clickbutton" value="确认撤销" />
                             <input type="button" class="clickbutton" value="返回" onclick="window.history.back();"/>
                         </td>
                     </tr>
@@ -183,7 +183,7 @@
 <div class="page-footer">
     <hr/>
     更多问题，欢迎联系管理员
-    <img src="images/footer.png" alt="CoolMeeting"/>
+    <img src="/images/footer.png" alt="CoolMeeting"/>
 </div>
 </body>
 </html>

@@ -34,7 +34,7 @@
                                 <td>${meeting.endtime?string('yyyy-MM-dd HH:mm:ss')}</td>
                                 <td>${meeting.reservationtime?string('yyyy-MM-dd HH:mm:ss')}</td>
                                 <td>
-                                    <a class="clickbutton" href="meetingdetails?meetingid=${meeting.meetingid}">查看/取消</a>
+                                    <a class="clickbutton" href="mymeetingdetails?meetingid=${meeting.meetingid}">查看/取消</a>
                                 </td>
                             </tr>
                         </#list>

@@ -25,7 +25,8 @@
             meeting.starttime,
             meeting.endtime,
             meeting.reservationtime,
-            employee.employeename
+            employee.employeename,
+            meeting.status
         FROM
             meeting,
             meetingroom,
@@ -74,7 +75,7 @@
         </if>
         <where>
             <if test="meeting.meetingname != null and meeting.meetingname != ''">
-                meeting.meetingname like concat('%', #{meeting.meetingname}, '%')
+                and meeting.meetingname like concat('%', #{meeting.meetingname}, '%')
             </if>
             <if test="reservationtimefrom != null">
                 and meeting.reservationtime <![CDATA[>=]]> #{reservationtimefrom}
@@ -96,6 +97,7 @@
 
     <select id="getMeetingById" resultType="com.nexus.meeting.model.Meeting">
         SELECT
+            meetingid,
             meetingname,
             numberofparticipants,
             starttime,
@@ -140,24 +142,21 @@
                 meeting.starttime AS starttime,
                 meeting.endtime AS endtime,
                 meeting.reservationtime as reservationtime,
-                employee.employeeid AS employeeid,
-                meeting.roomid AS roomid,
-                meetingroom.roomid AS mrroomid,
-                meetingparticipants.meetingid AS mpmeetingid,
-                meetingparticipants.employeeid AS mpemployeeid
+                employee.employeeid
             FROM
                 meeting,
                 meetingroom,
                 meetingparticipants,
                 employee
+            WHERE
+                employee.employeeid = #{employeeid}
+                AND meeting.roomid = meetingroom.roomid
+                AND meeting.meetingid = meetingparticipants.meetingid
+                AND employee.employeeid = meetingparticipants.employeeid
+                AND meeting.status = 1
         ) AS mt,
         ( SELECT employee.employeename AS employeename, meeting.meetingid AS meetingid FROM meeting, employee WHERE meeting.reservationistid = employee.employeeid ) AS e
-        WHERE
-            mt.employeeid = #{employeeid}
-            AND mt.roomid = mt.mrroomid
-            AND mt.meetingid = mt.mpmeetingid
-            AND mpemployeeid = employeeid
-            AND e.meetingid = mt.meetingid
+        WHERE e.meetingid = mt.meetingid
         limit #{page}, #{pageSize}
     </select>
 
@@ -177,7 +176,8 @@
                 meeting.roomid AS roomid,
                 meetingroom.roomid AS mrroomid,
                 meetingparticipants.meetingid AS mpmeetingid,
-                meetingparticipants.employeeid AS mpemployeeid
+                meetingparticipants.employeeid AS mpemployeeid,
+                meeting.status AS status
             FROM
                 meeting,
                 meetingroom,
@@ -191,6 +191,7 @@
             AND mt.meetingid = mt.mpmeetingid
             AND mpemployeeid = employeeid
             AND e.meetingid = mt.meetingid
+            AND mt.status = 1
     </select>
 
     <select id="getBookingByEmployeeId" resultType="com.nexus.meeting.model.Meeting">
@@ -207,5 +208,17 @@
         WHERE
             meeting.reservationistid = #{employeeid}
             AND meeting.roomid = meetingroom.roomid
+            AND meeting.status = 1
     </select>
+
+    <update id="updatemeeting" parameterType="com.nexus.meeting.model.Meeting">
+        UPDATE
+            meeting
+        SET
+            canceledtime = SYSDATE(),
+            cancelreason = #{cancelreason},
+            STATUS = 0
+        WHERE
+            meetingid = #{meetingid}
+    </update>
 </mapper>

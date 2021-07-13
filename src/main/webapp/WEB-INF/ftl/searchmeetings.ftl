@@ -94,6 +94,7 @@
                         <th>会议结束时间</th>
                         <th>会议预定时间</th>
                         <th>预定者</th>
+                        <th>会议状态</th>
                         <th>操作</th>
                     </tr>
                     <#--
@@ -117,10 +118,10 @@
                                 <td>${meeting.endtime?string('yyyy-MM-dd HH:mm:ss')}</td>
                                 <td>${meeting.reservationtime?string('yyyy-MM-dd HH:mm:ss')}</td>
                                 <td>${meeting.employeename}</td>
+                                <td>${(meeting.status==1)?string('正常','已取消')}</td>
                                 <td>
                                     <a class="clickbutton" href="/admin/meetingdetails?meetingid=${meeting.meetingid}">查看详情</a>
                                 </td>
-<#--                                <td>${meeting.meetingid}</td>-->
                             </tr>
                         </#list>
                     </#if>
