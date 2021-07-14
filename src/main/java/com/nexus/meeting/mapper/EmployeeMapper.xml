@@ -53,4 +53,12 @@
     <select id="getEmpsByDepId" resultType="com.nexus.meeting.model.Employee">
         select * from employee where departmentid = #{depId} and status = 1
     </select>
+    
+    <update id="updatePassWord" parameterType="com.nexus.meeting.model.Employee">
+        UPDATE employee
+        SET password = #{newpassword}
+        WHERE
+            employeeid = #{employeeid}
+            AND password = #{password}
+    </update>
 </mapper>

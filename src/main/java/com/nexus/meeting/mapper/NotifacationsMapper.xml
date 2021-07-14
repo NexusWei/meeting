@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nexus.meeting.mapper.NotifacionsMapper">
+    <select id="getMeetingByData" resultType="com.nexus.meeting.model.Meeting">
+        SELECT
+            meeting.meetingid,
+            meetingname,
+            roomname,
+            starttime,
+            endtime
+        FROM
+            meeting,
+            meetingroom,
+            meetingparticipants
+        WHERE
+            meeting.STATUS = 1
+        AND meeting.roomid = meetingroom.roomid
+        AND date( starttime ) <![CDATA[>=]]> CURDATE()
+        AND date( starttime ) <![CDATA[<=]]> DATE_ADD(CURDATE(), INTERVAL 7 DAY)
+        AND meeting.meetingid = meetingparticipants.meetingid
+        AND meetingparticipants.employeeid = #{employeeid}
+    </select>
+    
+    <select id="getMeetingByStatus" resultType="com.nexus.meeting.model.Meeting">
+        SELECT
+            meeting.meetingid,
+            meetingname,
+            roomname,
+            starttime,
+            endtime,
+            cancelreason
+        FROM
+            meeting,
+            meetingroom,
+            meetingparticipants
+        WHERE
+            meeting.STATUS = 0
+            AND meeting.roomid = meetingroom.roomid
+            AND meeting.meetingid = meetingparticipants.meetingid
+            AND meetingparticipants.employeeid = #{employeeid}
+    </select>
+</mapper>

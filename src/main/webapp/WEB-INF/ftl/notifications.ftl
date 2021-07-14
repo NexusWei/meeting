@@ -10,7 +10,7 @@
             <#include 'leftMenu.ftl'>
             <div class="page-content">
                 <div class="content-nav">
-                    个人中心 > <a href="notifications">最新通知</a>
+                    个人中心 > <a href="/admin/notifications">最新通知</a>
                 </div>
                 <table class="listtable">
                     <caption>
@@ -23,33 +23,21 @@
                         <th>结束时间</th>
                         <th style="width:100px">操作</th>
                     </tr>
-                    <tr>
-                        <td>三季度销售总结会</td>
-                        <td>第一会议室</td>
-                        <td>2013-11-20 9：00</td>
-                        <td>2013-11-20 11：00</td>
-                        <td>
-                            <a class="clickbutton" href="meetingdetails.ftl">查看详情</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>与Google合作推广Android技术培训会议</td>
-                        <td>第三会议室</td>
-                        <td>2013-11-18 9：00</td>
-                        <td>2013-11-18 11：00</td>
-                        <td>
-                            <a class="clickbutton" href="meetingdetails.ftl">查看详情</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>员工例行面谈</td>
-                        <td>小会议室</td>
-                        <td>2013-11-16 16：00</td>
-                        <td>2013-11-16 17：00</td>
-                        <td>
-                            <a class="clickbutton" href="meetingdetails.ftl">查看详情</a>
-                        </td>
-                    </tr>
+                    <#if meetings ??>
+                        <#list meetings as meeting>
+                            <tr>
+                                <td>${meeting.meetingname}</td>
+                                <td>${meeting.roomname}</td>
+                                <td>${meeting.starttime?string('yyyy-MM-dd HH:mm:ss')}</td>
+                                <td>${meeting.endtime?string('yyyy-MM-dd HH:mm:ss')}</td>
+                                <td>
+                                    <a class="clickbutton" href="meetingdetails?meetingid=${meeting.meetingid}">查看详情</a>
+                                </td>
+                            </tr>
+                        </#list>
+                    </#if>
+
+
                 </table>
                 <table class="listtable">
                     <caption>
@@ -63,38 +51,21 @@
                         <th>取消原因</th>
                         <th style="width:100px">操作</th>
                     </tr>
-                    <tr>
-                        <td>三季度销售总结会</td>
-                        <td>第一会议室</td>
-                        <td>2013-11-20 9：00</td>
-                        <td>2013-11-20 11：00</td>
-                        <td>人员出差</td>
-                        <td>
-                            <a class="clickbutton" href="meetingdetails.ftl">查看详情</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>与Google合作推广Android技术培训会议</td>
-                        <td>第三会议室</td>
-                        <td>2013-11-18 9：00</td>
-                        <td>2013-11-18 11：00</td>
-                        <td>人员出差</td>
-                        <td>
-                            <a class="clickbutton" href="meetingdetails.ftl">查看详情</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>员工例行面谈</td>
-                        <td>小会议室</td>
-                        <td>2013-11-16 16：00</td>
-                        <td>2013-11-16 17：00</td>
-                        <td>人员出差</td>
-                        <td>
-                            <a class="clickbutton" href="meetingdetails.ftl">查看详情</a>
-                        </td>
-                    </tr>
+                    <#if mts ??>
+                        <#list mts as mt>
+                            <tr>
+                                <td>${mt.meetingname}</td>
+                                <td>${mt.roomname}</td>
+                                <td>${mt.starttime?string('yyyy-MM-dd HH:mm:ss')}</td>
+                                <td>${mt.endtime?string('yyyy-MM-dd HH:mm:ss')}</td>
+                                <td><#if mt??>${mt.cancelreason!''}</#if></td>
+                                <td>
+                                    <a class="clickbutton" href="meetingdetails?meetingid=${mt.meetingid}">查看详情</a>
+                                </td>
+                            </tr>
+                        </#list>
+                    </#if>
                 </table>
-                
             </div>
         </div>
         <div class="page-footer">

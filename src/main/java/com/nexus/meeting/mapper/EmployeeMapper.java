@@ -21,4 +21,6 @@ public interface EmployeeMapper {
     Long getTotal(Employee employee);
 
     List<Employee> getEmpsByDepId(Integer depId);
+
+    Integer updatePassWord(@Param("newpassword") String newpassword, @Param("employeeid") Integer employeeid, @Param("password") String password);
 }

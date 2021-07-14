@@ -39,7 +39,6 @@
                             </tr>
                         </#list>
                     </#if>
-
                 </table>
             </div>
         </div>

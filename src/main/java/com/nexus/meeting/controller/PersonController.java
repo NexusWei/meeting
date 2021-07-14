@@ -1,6 +1,7 @@
 package com.nexus.meeting.controller;
 
 import com.nexus.meeting.model.Employee;
+import com.nexus.meeting.service.EmployeeService;
 import com.nexus.meeting.service.MeetingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,9 @@ public class PersonController {
 
     @Autowired
     MeetingService meetingService;
+
+    @Autowired
+    EmployeeService employeeService;
 
     @RequestMapping("/mymeetings")
     public String mymeetings(Model model, HttpSession httpSession, @RequestParam(defaultValue = "1") Integer page) {
@@ -61,10 +65,26 @@ public class PersonController {
     public String docancelmeeting(Integer meetingid, String cancelreason) {
         Integer result = meetingService.updatemeeting(meetingid, cancelreason);
         if (result >= 1) {
-            System.out.println("取消会议成功");
+            return "redirect:/admin/mybookings";
         }else {
-            System.out.println("取消会议失败");
+            return "cancelmeeting";
         }
-        return "redirect:/admin/mybookings";
+    }
+
+    @RequestMapping("changepassword")
+    public String changepassword() {
+        return "changepassword";
+    }
+
+    @PostMapping("dochangepassword")
+    public String dochangepassword(String newpassword, String password, HttpSession httpSession, Model model) {
+        Integer result = employeeService.updatePassWord(newpassword, ((Employee) httpSession.getAttribute("currentuser")).getEmployeeid(), password);
+        System.out.println(result);
+        if (result == 1) {
+            return "redirect:/";
+        }else {
+            model.addAttribute("error", "密码修改失败，请检查原密码是否正确");
+            return "changepassword";
+        }
     }
 }

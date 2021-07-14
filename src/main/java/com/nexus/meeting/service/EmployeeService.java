@@ -54,4 +54,8 @@ public class EmployeeService {
     public List<Employee> getEmpsByDepId(Integer depId) {
         return employeeMapper.getEmpsByDepId(depId);
     }
+
+    public Integer updatePassWord(String newpassword, Integer employeeid, String password) {
+        return employeeMapper.updatePassWord(newpassword, employeeid, password);
+    }
 }

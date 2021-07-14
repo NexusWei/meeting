@@ -18,6 +18,16 @@ public class Meeting {
     private String roomname;
     private String employeename;
 
+    private String cancelreason;
+
+    public String getCancelreason() {
+        return cancelreason;
+    }
+
+    public void setCancelreason(String cancelreason) {
+        this.cancelreason = cancelreason;
+    }
+
     public String getRoomname() {
         return roomname;
     }
@@ -50,6 +60,7 @@ public class Meeting {
                 ", status=" + status +
                 ", roomname='" + roomname + '\'' +
                 ", employeename='" + employeename + '\'' +
+                ", cancelreason='" + cancelreason + '\'' +
                 '}';
     }
 

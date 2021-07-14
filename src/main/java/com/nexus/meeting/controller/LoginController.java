@@ -44,7 +44,7 @@ public class LoginController {
             // currentuser的内容
             // Employee{employeeid=8, employeename='王晓华', username='wangxh', phone='13671075406', email='wang@qq.com', status=1, departmentid=1, password='1', role=1}
             httpSession.setAttribute("currentuser", employee);
-            return "redirect:/notifications";
+            return "redirect:/admin/notifications";
         }
     }
 

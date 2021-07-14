@@ -10,6 +10,6 @@
         <#if currentuser??>
             <strong>${currentuser.employeename!''}</strong>
         </#if>
-        <a href="changepassword.ftl">[修改密码]</a>
+        <a href="/admin/changepassword">[修改密码]</a>
     </div>
 </div>
